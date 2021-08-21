@@ -50,7 +50,7 @@ class SineWaveGenerator:
         '''Set the amplitude that the sinewave will gradually shift towards.'''
         self.goal_amplitude = amplitude
 
-    def set_wavefrom(self, waveform):
+    def set_waveform(self, waveform):
         self.waveform = waveform
 
     def set_decibels(self, decibels):
