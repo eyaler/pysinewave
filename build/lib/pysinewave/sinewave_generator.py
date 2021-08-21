@@ -8,7 +8,7 @@ class SineWaveGenerator:
     SineWaveGenerator is included to allow for alternative uses of generated sinewave data.)'''
 
     def __init__(self, pitch, pitch_per_second=12, decibels=1, decibels_per_second=1, 
-                samplerate=utilities.DEFAULT_SAMPLE_RATE):
+                samplerate=utilities.DEFAULT_SAMPLE_RATE, waveform=np.sin):
         self.frequency = utilities.pitch_to_frequency(pitch)
         self.phase = 0
         self.amplitude = utilities.decibels_to_amplitude_ratio(decibels)
@@ -18,6 +18,7 @@ class SineWaveGenerator:
         self.goal_frequency = self.frequency
         self.goal_amplitude = self.amplitude
         self.samplerate = samplerate
+        self.waveform = waveform
     
     def new_frequency_array(self, time_array):
         '''Calcululate the frequency values for the next chunk of data.'''
@@ -48,7 +49,10 @@ class SineWaveGenerator:
     def set_amplitude(self, amplitude):
         '''Set the amplitude that the sinewave will gradually shift towards.'''
         self.goal_amplitude = amplitude
-    
+
+    def set_wavefrom(self, waveform):
+        self.waveform = waveform
+
     def set_decibels(self, decibels):
         '''Set the amplitude (in decibels) that the sinewave will gradually shift towards.'''
         self.goal_amplitude = utilities.decibels_to_amplitude_ratio(decibels)
@@ -70,7 +74,7 @@ class SineWaveGenerator:
         new_amplitude_array = self.new_amplitude_array(time_array)
 
         # Create the sinewave array
-        sinewave_array = new_amplitude_array * np.sin(2*np.pi*new_phase_array)
+        sinewave_array = new_amplitude_array * self.waveform(2*np.pi*new_phase_array)
         
         # Update frequency and amplitude
         self.frequency = new_frequency_array[-1]
