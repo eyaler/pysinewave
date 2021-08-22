@@ -81,7 +81,7 @@ class SineWaveGenerator:
         self.amplitude = new_amplitude_array[-1]
 
         # Update phase (getting rid of extra cycles, so we don't eventually have an overflow error)
-        self.phase = new_phase_array[-1] % 1
+        self.phase = new_phase_array[-1] % 1000  # changed this from 1 to 1000 to allow dealing with additive waveforms
 
         #print('Frequency: {0} Phase: {1} Amplitude: {2}'.format(self.frequency, self.phase, self.amplitude))
 
