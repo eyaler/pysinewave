@@ -8,7 +8,7 @@ class SineWaveGenerator:
     SineWaveGenerator is included to allow for alternative uses of generated sinewave data.)'''
 
     def __init__(self, pitch, pitch_per_second=12, decibels=1, decibels_per_second=1, 
-                samplerate=utilities.DEFAULT_SAMPLE_RATE, waveform=np.sin):
+                samplerate=utilities.DEFAULT_SAMPLE_RATE, waveform=np.sin, cutoff=2000000000):
         self.frequency = utilities.pitch_to_frequency(pitch)
         self.phase = 0
         self.amplitude = utilities.decibels_to_amplitude_ratio(decibels)
@@ -19,7 +19,8 @@ class SineWaveGenerator:
         self.goal_amplitude = self.amplitude
         self.samplerate = samplerate
         self.waveform = waveform
-    
+        self.cutoff = cutoff
+
     def new_frequency_array(self, time_array):
         '''Calcululate the frequency values for the next chunk of data.'''
         dir = utilities.direction(self.frequency, self.goal_frequency)
@@ -82,9 +83,8 @@ class SineWaveGenerator:
 
         # Update phase (getting rid of extra cycles, so we don't eventually have an overflow error)
         self.phase = new_phase_array[-1]
-        cutoff = 2000000000
-        if self.phase > cutoff:  # changed from cutoff=1 to this to allow dealing with additive waveforms without accumulating an audible error within a period of a few hours
-            self.phase -= cutoff
+        if self.phase > self.cutoff:  # changed from cutoff=1 to this to allow dealing with additive waveforms without accumulating an audible error within a period of a few hours
+            self.phase -= self.cutoff
 
         #print('Frequency: {0} Phase: {1} Amplitude: {2}'.format(self.frequency, self.phase, self.amplitude), np.max(np.abs(sinewave_array)))
 
