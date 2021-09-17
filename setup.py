@@ -11,7 +11,7 @@ setuptools.setup(
     description="Generate and play sine waves in real time, that can make smooth, continuous transitions in pitch and volume.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/eylaer/pysinewave",
+    url="https://github.com/eyaler/pysinewave",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

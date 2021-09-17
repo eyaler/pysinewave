@@ -20,7 +20,7 @@ class SineWave:
 
         # Create the output stream
         self.output_stream = sd.OutputStream(channels=channels, callback= lambda *args: self._callback(*args), 
-                                samplerate=samplerate, clip_off=False, dither_off=False)
+                                samplerate=samplerate, clip_off=clip_off, dither_off=dither_off)
 
         self.channels = channels
         
