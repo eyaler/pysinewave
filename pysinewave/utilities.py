@@ -44,7 +44,7 @@ def sinewave(frequency, time):
 
 def interval_to_frequency_ratio(interval):
     """The frequency of the given pitch (in Hz), relative to middle C"""
-    return 2**(interval/12)
+    return 2 ** (interval/12)
 
 
 def pitch_to_frequency(pitch):
@@ -54,4 +54,4 @@ def pitch_to_frequency(pitch):
 
 def decibels_to_amplitude_ratio(decibels):
     """The ratio between two amplitudes given a decibel change"""
-    return 2**(decibels/10)
+    return 2 ** (decibels/10)
