@@ -8,8 +8,8 @@ from pysinewave import sinewave_generator
 
 
 class SineWave:
-    '''Generates and plays a continuous sinewave, with smooth transitions in frequency (pitch)
-        and amplitude (volume).'''
+    """Generates and plays a continuous sinewave, with smooth transitions in frequency (pitch)
+        and amplitude (volume)."""
 
     def __init__(self, pitch=0, pitch_per_second=12, decibels=0, decibels_per_second=1, channels=1, channel_side="lr",
                  samplerate=utilities.DEFAULT_SAMPLE_RATE, clip_off=False, dither_off=False, waveform=np.sin,
@@ -37,7 +37,7 @@ class SineWave:
         self.data = None
 
     def _callback(self, outdata, frames, time, status):
-        '''Callback function for the output stream.'''
+        """Callback function for the output stream."""
         # Print any error messages we receive
         if status:
             print(status, file=sys.stderr)
@@ -51,26 +51,26 @@ class SineWave:
             outdata[:, self.channel_side] = 0.0
 
     def play(self):
-        '''Plays the sinewave (in a separate thread). Changes in frequency or amplitude will transition smoothly.'''
+        """Plays the sinewave (in a separate thread). Changes in frequency or amplitude will transition smoothly."""
         self.output_stream.start()
 
     def stop(self):
-        '''If the sinewave is playing, stops the sinewave.'''
+        """If the sinewave is playing, stops the sinewave."""
         self.output_stream.stop()
 
     def set_frequency(self, frequency):
-        '''Sets the goal frequency of the sinewave, which will be smoothly transitioned to.'''
+        """Sets the goal frequency of the sinewave, which will be smoothly transitioned to."""
         self.sinewave_generator.set_frequency(frequency)
 
     def set_pitch(self, pitch):
-        '''Sets the goal pitch of the sinewave (relative to middle C),
-        which will be smoothly transitioned to.'''
+        """Sets the goal pitch of the sinewave (relative to middle C),
+        which will be smoothly transitioned to."""
         self.sinewave_generator.set_pitch(pitch)
 
     def set_volume(self, volume):
-        '''Sets the goal volume (in decibels, relative to medium volume) of the sinewave'''
+        """Sets the goal volume (in decibels, relative to medium volume) of the sinewave"""
         self.sinewave_generator.set_decibels(volume)
 
     def set_waveform(self, waveform):
-        '''Sets the goal volume (in decibels, relative to medium volume) of the sinewave'''
+        """Sets the goal volume (in decibels, relative to medium volume) of the sinewave"""
         self.sinewave_generator.set_waveform(waveform)

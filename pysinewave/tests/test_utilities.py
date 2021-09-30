@@ -14,9 +14,9 @@ from pysinewave import utilities
 
 def test_bounded_by_end():
     # Bounds by end and only end, when end > start
-    assert (utilities.bounded_by_end([1,2,3,4,5], 3, 4) == [1,2,3,4,4]).all()
+    assert (utilities.bounded_by_end([1, 2, 3, 4, 5], 3, 4) == [1, 2, 3, 4, 4]).all()
     # Bounds by end and only end, when end < start
-    assert (utilities.bounded_by_end([1,2,3,4,5], 3, 2) == [2,2,3,4,5]).all()
+    assert (utilities.bounded_by_end([1, 2, 3, 4, 5], 3, 2) == [2, 2, 3, 4, 5]).all()
 
 def test_pitch_to_frequency():
     # 0 is middle C
