@@ -34,7 +34,7 @@ class SineWave:
         else:
             self.channel_side = -1
 
-        self.data = None
+        self.record(start=False, clear=True)
 
     def _callback(self, outdata, frames, time, status):
         """Callback function for the output stream."""
@@ -43,12 +43,20 @@ class SineWave:
             print(status, file=sys.stderr)
 
         # Get and use the sinewave's next batch of data
-        self.data = self.sinewave_generator.next_data(frames)
-        outdata[:] = self.data.reshape(-1, 1)
+        data = self.sinewave_generator.next_data(frames)
+        outdata[:] = data.reshape(-1, 1)
 
         # Output on the given channel
         if self.channel_side != -1 and self.channels == 2:
             outdata[:, self.channel_side] = 0.0
+
+        if self.is_recording:
+            self.record_buffer.append(data)
+
+    def record(self, start=None, clear=False):
+        if clear:
+            self.record_buffer = []
+        self.is_recording = not self.is_recording if start is None else start
 
     def play(self):
         """Plays the sinewave (in a separate thread). Changes in frequency or amplitude will transition smoothly."""
